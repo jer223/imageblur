@@ -22,31 +22,49 @@ class Image
       return coords
   end
 
+  def blur(distance)
+    distance.times do
+      change
+    end  
+  end  
+
   def change
     array_coords = find_ones
 
     array_coords.each do |y, x|
-      blur(y, x)
+      blur_coords(y, x)
     end   
   end  
 end  
 
-def blur(y, x)
+def blur_coords(y, x)
   @image[y -1][x] = 1 unless y == 0
   @image[y +1][x] = 1 unless y >= @row_length-1
   @image[y][x -1] = 1 unless x == 0
   @image[y][x +1] = 1 unless x >= @col_length-1
 end
 
+#image = Image.new([
+#  [0, 0, 0, 0],
+#  [0, 1, 0, 0],
+#  [0, 0, 0, 1],
+#  [0, 0, 0, 0],
+#  [0, 0, 0, 0],
+#  [1, 0, 0, 0]
+#])
+
 image = Image.new([
-  [0, 0, 0, 0],
-  [0, 1, 0, 0],
-  [0, 0, 0, 1],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [1, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0]
 ])
 
-image.change
+
+image.blur(2)
 #p image.find_ones
 image.output_image
